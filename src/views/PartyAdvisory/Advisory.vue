@@ -14,6 +14,12 @@
                 <el-form-item>
                     <el-button type="primary" @click="handleAdd">新增</el-button>
                 </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="handleExport">导出Excel</el-button>
+                </el-form-item>
+                 <el-form-item>
+                    <el-button type="primary" @click="handlImport">导入Excel</el-button>
+                </el-form-item>
             </el-form>
         </el-col>
          <!--列表-->
@@ -65,6 +71,8 @@
         </el-col>
         
         <!--编辑界面-->
+        <!-- ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，
+        引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例： -->
         <el-dialog title="编辑" :visible.sync="editFormVisible" v-model="editFormVisible" :close-on-click-modal="false">
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                 <el-form-item label="咨询日期" prop="AdvisoryTime">
@@ -264,10 +272,10 @@
 
                 testapi();
                 //NProgress.start();
-                getUserListPage(para).then((res) => {
+                getPartyAdvisoryInfoListPage(para).then((res) => {
 
                     this.total = res.data.response.dataCount;
-                    this.users = res.data.response.data;
+                    this.advisory = res.data.response.data;
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -279,8 +287,8 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = {id: row.uID};
-                    removeUser(para).then((res) => {
+                    let para = {id: row.Id};
+                    removePartyAdvisoryInfo(para).then((res) => {
 
                         if (util.isEmt.format(res)) {
                             this.listLoading = false;
@@ -310,39 +318,46 @@
             //显示编辑界面
             handleEdit: function (index, row) {
                 this.editFormVisible = true;
-                this.editForm = Object.assign({}, row);
+                // this.editForm = Object.assign({}, row);
 
-                getRoleListPage().then((res) => {
-                    this.roles = res.data.response.data;
-                });
+                // getRoleListPage().then((res) => {
+                //     this.roles = res.data.response.data;
+                // });
 
             },
             //显示新增界面
             handleAdd() {
                 this.addFormVisible = true;
                 this.addForm = {
-                    uLoginName: '',
-                    uRealName: '',
-                    uLoginPWD: '',
-                    name: '',
-                    sex: -1,
-                    age: 0,
-                    birth: '',
-                    addr: ''
+                    Id: 0,
+                    AdvisoryTime : '',
+                    Name : '',
+                    PhoneNumber : '',
+                    Birthday : '',
+                    ScheduledDate : '',
+                    PredictNumber : '',
+                    Source : '',
+                    Deposit : 0,
+                    DepositTime : '',
+                    FirstInfo : '',
+                    SecondInfo : '',
+                    ThirdInfo : '',
+                    Remark : ''
                 };
             },
             //编辑
             editSubmit: function () {
+                //$refs  一个对象，持有注册过ref属性的所有DOM元素和组件实例
                 this.$refs.editForm.validate((valid) => {
                     if (valid) {
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
+                            //这个格式化日期还没看出来原因，先放着
+                            //para.birth = (!para.birth || para.birth == '') ? util.formatDate.format(new Date(), 'yyyy-MM-dd') : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
 
-                            para.birth = (!para.birth || para.birth == '') ? util.formatDate.format(new Date(), 'yyyy-MM-dd') : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-
-                            editUser(para).then((res) => {
+                            editPartyAdvisoryInfo(para).then((res) => {
 
                                 if (util.isEmt.format(res)) {
                                     this.editLoading = false;
@@ -378,8 +393,8 @@
                             this.addLoading = true;
                             //NProgress.start();
                             let para = Object.assign({}, this.addForm);
-                            para.birth = (!para.birth || para.birth == '') ? util.formatDate.format(new Date(), 'yyyy-MM-dd') : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-                            addUser(para).then((res) => {
+                            //para.birth = (!para.birth || para.birth == '') ? util.formatDate.format(new Date(), 'yyyy-MM-dd') : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
+                            addPartyAdvisoryInfo(para).then((res) => {
 
                                 if (util.isEmt.format(res)) {
                                     this.addLoading = false;
@@ -414,12 +429,20 @@
             selsChange: function (sels) {
                 this.sels = sels;
             },
+            //导出Excel
+            handleExport:function(){
+                alert("导出Excel");
+            },
+            //上传Excel
+            handImport:function(){
+                alert("导入Excel");
+            },      
             //批量删除
             batchRemove: function () {
 
                 // return;
 
-                var ids = this.sels.map(item => item.uID).toString();
+                var ids = this.sels.map(item => item.Id).toString();
                 this.$confirm('确认删除选中记录吗？', '提示', {
                     type: 'warning'
                 }).then(() => {

@@ -21,6 +21,8 @@ import Charts from './views/Form/Charts.vue'
 import Blogs from './views/Blog/Blogs.vue'
 import Bugs from './views/Tibug/Bugs.vue'
 
+import Advisory from './views/PartyAdvisory/Advisory.vue'
+
 import Thanks from './views/Thanks'
 import {saveRefreshtime} from "./api/api";
 import NoPage from "./views/404";
@@ -172,6 +174,17 @@ const router = new Router({
             path: '/Blogs',
             component: Blogs,
             name: '博客管理',
+            iconCls: ' fa-file-word-o',//图标样式class
+            // hidden: true,
+            meta: {
+                title: '博客管理',
+                requireAuth: false // 添加该字段，表示进入这个路由是需要登录的
+            }
+        },
+        {
+            path: '/Advisory',
+            component: Advisory,
+            name: '咨询信息',
             iconCls: ' fa-file-word-o',//图标样式class
             // hidden: true,
             meta: {
