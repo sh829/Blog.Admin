@@ -239,7 +239,7 @@
                 testapi();
                 //NProgress.start();
                 getUserListPage(para).then((res) => {
-
+                    debugger
                     this.total = res.data.response.dataCount;
                     this.users = res.data.response.data;
                     this.listLoading = false;

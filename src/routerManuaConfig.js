@@ -27,7 +27,7 @@ import Thanks from './views/Thanks'
 import {saveRefreshtime} from "./api/api";
 import NoPage from "./views/404";
 import TestOne from "./views/TestShow/TestOne";
-
+import BookInfo from "./views/ParytyBook/BookInfo.vue"
 
 
 Vue.use(Router)
@@ -182,15 +182,45 @@ const router = new Router({
             }
         },
         {
-            path: '/Advisory',
-            component: Advisory,
-            name: '咨询信息',
-            iconCls: ' fa-file-word-o',//图标样式class
-            // hidden: true,
-            meta: {
-                title: '博客管理',
-                requireAuth: false // 添加该字段，表示进入这个路由是需要登录的
-            }
+            path: '/',
+            component: Layout,
+            name: '预定信息',
+            iconCls: 'fa-line-chart ',//图标样式class
+            children: [
+                {
+                    path: '/PartyAdvisory/Advisory', component: Advisory, name: '预定信息',
+                    meta: {
+                        title: '预定信息',
+                        requireAuth: false
+                    }
+                },
+            ]
+        },
+        // {
+        //     path: '/PartyAdvisory/Advisory',
+        //     component: Advisory,
+        //     name: '咨询信息',
+        //     iconCls: ' fa-file-word-o',//图标样式class
+        //     // hidden: true,
+        //     meta: {
+        //         title: '咨询信息',
+        //         requireAuth: false // 添加该字段，表示进入这个路由是需要登录的
+        //     }
+        // },
+        {
+            path: '/',
+            component: Layout,
+            name: '预定信息',
+            iconCls: 'fa-line-chart ',//图标样式class
+            children: [
+                {
+                    path: '/PartyBook/BookInfo', component: BookInfo, name: '预定信息',
+                    meta: {
+                        title: '预定信息',
+                        requireAuth: false
+                    }
+                },
+            ]
         },
         {
             path: '/',

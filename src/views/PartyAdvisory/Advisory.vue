@@ -176,7 +176,7 @@
 <script>
     import util from '../../../util/date'
     import {testapi, getPartyAdvisoryInfoListPage , removePartyAdvisoryInfo, editPartyAdvisoryInfo, addPartyAdvisoryInfo} from '../../api/api';
-
+    debugger
     export default {
         data() {
             return {
@@ -264,6 +264,7 @@
             },
             //获取用户列表
             getAdvisory() {
+                 debugger
                 let para = {
                     page: this.page,
                     key: this.filters.name
