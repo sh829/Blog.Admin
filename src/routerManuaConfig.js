@@ -184,13 +184,13 @@ const router = new Router({
         {
             path: '/',
             component: Layout,
-            name: '预定信息',
+            name: '咨询信息',
             iconCls: 'fa-line-chart ',//图标样式class
             children: [
                 {
-                    path: '/PartyAdvisory/Advisory', component: Advisory, name: '预定信息',
+                    path: '/PartyAdvisory/Advisory', component: Advisory, name: '咨询信息',
                     meta: {
-                        title: '预定信息',
+                        title: '咨询信息',
                         requireAuth: false
                     }
                 },

@@ -289,7 +289,7 @@
                 }).then(() => {
                     this.listLoading = true;
                     //NProgress.start();
-                    let para = {id: row.Id};
+                    let para = {id: row.AdvisoryId};
                     removePartyAdvisoryInfo(para).then((res) => {
 
                         if (util.isEmt.format(res)) {
