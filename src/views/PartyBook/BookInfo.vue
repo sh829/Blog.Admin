@@ -37,24 +37,23 @@
             </el-table-column>
             <el-table-column prop="Age" label="年龄" width="" sortable>
             </el-table-column>
-            <el-table-column prop="ScheduledDate" label="意向日期"  width="" sortable>
+            <el-table-column prop="ScheduledDate" label="预定日期"  width="" sortable>
             </el-table-column>
-            <el-table-column prop="PredictNumber" label="预计人数" width=""  sortable>
+            <el-table-column prop="PredictNumber" label="预计/实到人数" width=""  sortable>
             </el-table-column>
-            <el-table-column prop="Source" label="来源"  width="" >
+            <el-table-column prop="Topic" label="主题"  width="" >
             </el-table-column>
-            <el-table-column prop="Deposit" label="定金" width="" sortable>
+            <el-table-column prop="TopicColor" label="主题色系" width="" sortable>
             </el-table-column>
-            <el-table-column prop="DepositTime" label="交定金日期"  width="" sortable>
+            <el-table-column prop="Price" label="套系"  width="" sortable>
             </el-table-column>
-            <el-table-column prop="FirstInfo" label="第一次跟进情况" width=""  sortable>
+            <el-table-column prop="BuffetCost" label="自助餐消费" width=""  sortable>
             </el-table-column>
-            <el-table-column prop="SecondInfo" label="第二次跟进情况"  width="" sortable>
+            <el-table-column prop="FoodCost" label="餐饮消费"  width="" sortable>
             </el-table-column>
-            <el-table-column prop="ThirdInfo" label="第三次跟进情况" width="" sortable>
+            <el-table-column prop="TotalCost" label="总消费金额" width="" sortable>
             </el-table-column>
-            <el-table-column prop="Remark" label="备注"  width="" >
-            </el-table-column>
+           
             <el-table-column label="操作" width="150">
                 <template scope="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -87,32 +86,29 @@
                  <el-form-item label="年龄">
                     <el-input v-model="editForm.Age" :min="0" :max="200"></el-input>
                 </el-form-item>
-                 <el-form-item label="意向日期">
+                 <el-form-item label="预定日期">
                     <el-date-picker type="date" placeholder="选择日期" v-model="editForm.ScheduledDate"></el-date-picker>
                 </el-form-item>
-                 <el-form-item label="预计人数">
+                 <el-form-item label="预计/实到人数">
                     <el-input v-model="editForm.PredictNumber" :min="0" :max="200"></el-input>
                 </el-form-item>
-                 <el-form-item label="来源">
-                    <el-input v-model="editForm.Source" :min="0" :max="200"></el-input>
+                 <el-form-item label="主题">
+                    <el-input v-model="editForm.Topic" :min="0" :max="200"></el-input>
                 </el-form-item>
-                 <el-form-item label="定金">
-                    <el-input-number v-model="editForm.Deposit" :min="0" :max="200"></el-input-number>
+                 <el-form-item label="主题色系">
+                    <el-input-number v-model="editForm.TopicColor" :min="0" :max="200"></el-input-number>
                 </el-form-item>
-                <el-form-item label="交定金日期">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="editForm.DepositTime"></el-date-picker>
+                <el-form-item label="套系">
+                    <el-date-picker type="date"  v-model="editForm.Price"></el-date-picker>
                 </el-form-item>
-                 <el-form-item label="第一次跟进情况">
-                    <el-input v-model="editForm.FirstInfo" :min="0" :max="200"></el-input>
+                 <el-form-item label="自助餐消费">
+                    <el-input-number v-model="editForm.BuffetCost" :min="0" :max="200"></el-input-number>
                 </el-form-item>
-                  <el-form-item label="第二次跟进情况">
-                    <el-input v-model="editForm.SecondInfo" :min="0" :max="200"></el-input>
+                  <el-form-item label="餐饮消费">
+                    <el-input-number v-model="editForm.FoodCost" :min="0" :max="200"></el-input-number>
                 </el-form-item>
-                  <el-form-item label="第三次跟进情况">
-                    <el-input v-model="editForm.ThirdInfo" :min="0" :max="200"></el-input>
-                </el-form-item>
-                 <el-form-item label="备注" prop="Name">
-                    <el-input type="textarea" v-model="editForm.Remark" ></el-input>
+                  <el-form-item label="总消费金额">
+                    <el-input-number v-model="editForm.TotalCost" :min="0" :max="200"></el-input-number>
                 </el-form-item>
                
             </el-form>
@@ -179,35 +175,39 @@
                     </el-form>
                 </el-tab-pane>
                 <el-tab-pane label="额外项目" name="third">
-                    <!--工具条-->
-                    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-                        <el-form>
-                            <el-form-item>
-                                <el-input v-model="filters.name" placeholder="姓名"  style="width: 30%;"></el-input>
-                                 <el-button type="primary" @click="getAdvisory" >查询</el-button>
-                                 <el-button type="primary" @click="handleAdd">新增</el-button>
-                                  <el-button type="primary" @click="handleAdd">删除</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </el-col>
-                    <el-table :data="extraProjectInfos" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
-                            style="width: 100%;">
-                            <el-table-column type="selection" width="30">
-                            </el-table-column>
-                            <el-table-column type="index" width="40">
-                            </el-table-column>
-                            <el-table-column prop="Name" label="项目名称" width="" sortable>
-                            </el-table-column>
-                            <el-table-column prop="Cost" label="费用" width="" >
-                            </el-table-column>
-                            
-                            <el-table-column label="操作" width="150">
-                                <template scope="scope">
-                                    <el-button size="small" @click="handleExtraProjectEdit(scope.$index, scope.row)">编辑</el-button>
-                                    <el-button type="danger" size="small" @click="handleExtraProjectDel(scope.$index, scope.row)">删除</el-button>
-                                </template>
-                            </el-table-column>
-                    </el-table>
+                   <vxe-toolbar>
+                    <template v-slot:buttons>
+                        <!-- <vxe-input v-model="filterName" type="search" placeholder="试试全表搜索"></vxe-input> -->
+                        <vxe-button @click="$refs.xTable.insert({name: Date.now()})">在第1行插入</vxe-button>
+                        <vxe-button @click="$refs.xTable.removeSelecteds()">删除选中</vxe-button>
+                        <vxe-button @click="saveExtraProjectList">保存</vxe-button>
+                    </template>
+                    </vxe-toolbar>
+                    <vxe-table
+                            border
+                            resizable
+                            fit
+                            auto-resize
+                            show-overflow
+                            ref="xTable"
+                            row-id="id"
+                            :data.sync="ExtraProjectData"
+                            :edit-config="{trigger: 'click', mode: 'cell'}"
+                            >
+                            <vxe-table-column type="selection" width="60"></vxe-table-column>
+                            <vxe-table-column type="index" width="60"></vxe-table-column>
+                            <vxe-table-column field="Name" title="项目名称" :edit-render="{name: 'input'}"  ></vxe-table-column>
+                            <vxe-table-column field="Cost" title="费用" :edit-render="{name: 'input'}" ></vxe-table-column>
+                          
+                    </vxe-table>
+                    <vxe-pager
+                        :loading="loading"
+                        :current-page="ExtraProjectData.currentPage"
+                        :page-size="ExtraProjectData.pageSize"
+                        :total="ExtraProjectData.totalResult"
+                        :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
+                        @page-change="handlePageChange">
+                    </vxe-pager>
                    
                 </el-tab-pane>
                 <el-tab-pane label="其他套餐外信息" name="fourth">
@@ -227,20 +227,20 @@
                             show-overflow
                             ref="xTable"
                             row-id="id"
-                            :data.sync="tableData"
+                            :data.sync="ExtraOtherData"
                             :edit-config="{trigger: 'click', mode: 'cell'}"
                             >
                             <vxe-table-column type="selection" width="60"></vxe-table-column>
                             <vxe-table-column type="index" width="60"></vxe-table-column>
-                            <vxe-table-column field="Name" title="Name" :edit-render="{name: 'input'}"  ></vxe-table-column>
-                            <vxe-table-column field="Cost" title="Cost" :edit-render="{name: 'input'}" ></vxe-table-column>
+                            <vxe-table-column field="Name" title="项目名称" :edit-render="{name: 'input'}"  ></vxe-table-column>
+                            <vxe-table-column field="Cost" title="费用" :edit-render="{name: 'input'}" ></vxe-table-column>
                           
                     </vxe-table>
                     <vxe-pager
                         :loading="loading"
-                        :current-page="tablePage.currentPage"
-                        :page-size="tablePage.pageSize"
-                        :total="tablePage.totalResult"
+                        :current-page="ExtraOtherData.currentPage"
+                        :page-size="ExtraOtherData.pageSize"
+                        :total="ExtraOtherData.totalResult"
                         :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
                         @page-change="handlePageChange">
                     </vxe-pager>
@@ -262,10 +262,14 @@
     export default {
         data() {
             return {
-                tableData: [
+                ExtraOtherData: [
                       {Name:"zhangsan",Cost:1},
                        {Name:"zhangsan",Cost:2}
                       ],
+                ExtraProjectData:[
+                     {Name:"zhangsan1",Cost:1},
+                       {Name:"zhangsan1",Cost:2}
+                ],
                 tablePage: {
                 currentPage: 1,
                 pageSize: 10,
