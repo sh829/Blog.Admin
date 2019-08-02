@@ -9,7 +9,7 @@
                     <el-input v-model="filters.name" placeholder="姓名"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="getAdvisory">查询</el-button>
+                    <el-button type="primary" @click="getPartyInfos">查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -23,7 +23,7 @@
             </el-form>
         </el-col>
          <!--列表-->
-        <el-table :data="advisory" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
+        <el-table :data="partyBookInfos" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
                   style="width: 100%;">
             <el-table-column type="selection" width="30">
             </el-table-column>
@@ -39,9 +39,9 @@
             </el-table-column>
             <el-table-column prop="ScheduledDate" label="预定日期"  width="" sortable>
             </el-table-column>
-            <el-table-column prop="PredictNumber" label="预计/实到人数" width=""  sortable>
+            <el-table-column prop="ActualNumber" label="预计/实到人数" width=""  sortable>
             </el-table-column>
-            <el-table-column prop="Topic" label="主题"  width="" >
+            <el-table-column prop="TopicName" label="主题"  width="" >
             </el-table-column>
             <el-table-column prop="TopicColor" label="主题色系" width="" sortable>
             </el-table-column>
@@ -90,10 +90,10 @@
                     <el-date-picker type="date" placeholder="选择日期" v-model="editForm.ScheduledDate"></el-date-picker>
                 </el-form-item>
                  <el-form-item label="预计/实到人数">
-                    <el-input v-model="editForm.PredictNumber" :min="0" :max="200"></el-input>
+                    <el-input v-model="editForm.ActualNumber" :min="0" :max="200"></el-input>
                 </el-form-item>
                  <el-form-item label="主题">
-                    <el-input v-model="editForm.Topic" :min="0" :max="200"></el-input>
+                    <el-input v-model="editForm.TopicName" :min="0" :max="200"></el-input>
                 </el-form-item>
                  <el-form-item label="主题色系">
                     <el-input-number v-model="editForm.TopicColor" :min="0" :max="200"></el-input-number>
@@ -257,7 +257,7 @@
 </template>
 <script>
     import util from '../../../util/date'
-    import {testapi, getPartyAdvisoryInfoListPage , removePartyAdvisoryInfo, editPartyAdvisoryInfo, addPartyAdvisoryInfo} from '../../api/api';
+    import {testapi, getPartyBookInfoListPage , removePartyBookInfo, editPartyBookInfo, addPartyBookInfo} from '../../api/api';
     debugger
     export default {
         data() {
@@ -279,9 +279,10 @@
                     name: ''
                 },
                 activeName: 'first',
-                advisory: [],
+                partyBookInfos: [],
                 //额外项目信息
                 extraProjectInfos:[],
+                ExtraOtherInfos:[],
                 total: 0,
                 page: 1,
                 listLoading: false,
@@ -335,7 +336,7 @@
                     PhoneNumber : '',
                     Age : '',
                     ScheduledDate : '',
-                    PredictNumber : '',
+                    ActualNumber : '',
                     Source : '',
                     Deposit : 0,
                     DepositTime : '',
@@ -366,7 +367,7 @@
                     PhoneNumber : '',
                     Age : '',
                     ScheduledDate : '',
-                    PredictNumber : '',
+                    ActualNumber : '',
                     Source : '',
                     Deposit : 0,
                     DepositTime : '',
@@ -423,10 +424,10 @@
             },
             handleCurrentChange(val) {
                 this.page = val;
-                this.getAdvisory();
+                this.getPartyInfos();
             },
-            //获取用户列表
-            getAdvisory() {
+            //获取预定信息
+            getPartyInfos() {
                  debugger
                 let para = {
                     page: this.page,
@@ -436,10 +437,12 @@
 
                 testapi();
                 //NProgress.start();
-                getPartyAdvisoryInfoListPage(para).then((res) => {
-
+                getPartyBookInfoListPage(para).then((res) => {
+                    console.log(res.data.response.data);
                     this.total = res.data.response.dataCount;
-                    this.advisory = res.data.response.data;
+                    this.partyBookInfos = res.data.response.data;
+                    this.extraProjectInfos=res.data.response.data.ExtraProjectInfo;
+                    this.ExtraOtherData=res.data.response.data.ExtraOtherProject;
                     this.listLoading = false;
                     //NProgress.done();
                 });
@@ -481,7 +484,7 @@
                             });
                         }
 
-                        this.getAdvisory();
+                        this.getPartyInfos();
                     });
                 }).catch(() => {
 
@@ -508,7 +511,7 @@
                     PhoneNumber : '',
                     Age : '',
                     ScheduledDate : '',
-                    PredictNumber : '',
+                    ActualNumber : '',
                     Source : '',
                     Deposit : 0,
                     DepositTime : '',
@@ -546,7 +549,7 @@
                                     //清空editform的数据
                                     this.$refs['editForm'].resetFields();
                                     this.editFormVisible = false;
-                                    this.getAdvisory();
+                                    this.getPartyInfos();
                                 } else {
                                     this.$message({
                                         message: res.data.msg,
@@ -584,7 +587,7 @@
                                     });
                                     this.$refs['addForm'].resetFields();
                                     this.addFormVisible = false;
-                                    this.getAdvisory();
+                                    this.getPartyInfos();
                                 }
                                 else {
                                     this.$message({
@@ -639,7 +642,7 @@
             }
         },
         mounted() {
-            this.getAdvisory();
+            this.getPartyInfos();
         }
     }
 
