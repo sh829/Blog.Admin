@@ -149,8 +149,8 @@
                                 <el-input v-model="bookInfo.ActualNumber"></el-input>
                             </el-form-item>
                             <el-form-item label="主题" prop="TopicName">
-                                <el-select v-model="bookInfo.TopicName" placeholder="请选择主题">
-                                    <el-option :key="0" :label="请选择主题" :value="0"></el-option>
+                                <el-select v-model="bookInfo.TopicName" >
+                                    <el-option :key="0"  :value="0"></el-option>
                                     <el-option v-for="item in topics" :key="item.Id" :label="item.Name" :value="item.Id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -161,8 +161,8 @@
                                 <el-input v-model="bookInfo.Price" :min="0" :max="200"></el-input>
                             </el-form-item>
                              <el-form-item label="自助消费">
-                                <el-select v-model="bookInfo.BuffetCost" placeholder="请选择消费套餐">
-                                    <el-option :key="0" :label="请选择消费套餐" :value="0"></el-option>
+                                <el-select v-model="bookInfo.BuffetCost" >
+                                    <el-option :key="0"  :value="0"></el-option>
                                     <el-option v-for="item in buffets" :key="item.Id" :label="item.Name" :value="item.Id"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -202,9 +202,9 @@
                     </vxe-table>
                     <vxe-pager
                         :loading="loading"
-                        :current-page="ExtraProjectData.currentPage"
-                        :page-size="ExtraProjectData.pageSize"
-                        :total="ExtraProjectData.totalResult"
+                        :current-page="tablePage.currentPage"
+                        :page-size="tablePage.pageSize"
+                        :total="tablePage.totalResult"
                         :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
                         @page-change="handlePageChange">
                     </vxe-pager>
@@ -238,9 +238,9 @@
                     </vxe-table>
                     <vxe-pager
                         :loading="loading"
-                        :current-page="ExtraOtherData.currentPage"
-                        :page-size="ExtraOtherData.pageSize"
-                        :total="ExtraOtherData.totalResult"
+                        :current-page="tablePage.currentPage"
+                        :page-size="tablePage.pageSize"
+                        :total="tablePage.totalResult"
                         :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
                         @page-change="handlePageChange">
                     </vxe-pager>
@@ -271,9 +271,9 @@
                        {Name:"zhangsan1",Cost:2}
                 ],
                 tablePage: {
-                currentPage: 1,
-                pageSize: 10,
-                totalResult: 0
+                    currentPage: 1,
+                    pageSize: 10,
+                    totalResult: 0
                 },
                 filters: {
                     name: ''
@@ -285,6 +285,7 @@
                 ExtraOtherInfos:[],
                 total: 0,
                 page: 1,
+                loading:false,
                 listLoading: false,
                 sels: [],//列表选中列
                 //顾客基本信息
@@ -406,6 +407,9 @@
             }
         },
         methods: {
+             handleClick(tab, event) {
+                console.log(tab, event);
+            },
             handlePageChange ({ currentPage, pageSize }) {
               this.tablePage.currentPage = currentPage
               this.tablePage.pageSize = pageSize
@@ -428,7 +432,7 @@
             },
             //获取预定信息
             getPartyInfos() {
-                 debugger
+                 
                 let para = {
                     page: this.page,
                     key: this.filters.name
