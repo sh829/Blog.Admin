@@ -164,6 +164,19 @@ export const addUser = params => {
 export const batchRemoveUser = params => {
     return axios.delete(`${base}/api/Claims/BatchDelete`, {params: params});//没做
 };
+//毕业生信息管理
+export const getGraduationListPage=params=>{
+    return axios.get(`${base}/api/GraduationStatistics/get`,{params:params});
+};
+export const removeGraduation=params=>{
+    return axios.delete(`${base}/api/GraduationStatistics/delete`,{params:params});
+};
+export const addGraduation=params=>{
+    return axios.post(`${base}/api/GraduationStatistics/post`,params);
+};
+export const editGraduation=params=>{
+    return axios.put(`${base}/api/GraduationStatistics/put`,params);
+};
 //顾客信息管理
 export const getCustomInfoListPage=params=>{
     return axios.get(`${base}/api/CustomInfo/get`,{params:params});

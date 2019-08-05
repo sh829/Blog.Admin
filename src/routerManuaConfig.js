@@ -28,8 +28,8 @@ import {saveRefreshtime} from "./api/api";
 import NoPage from "./views/404";
 import TestOne from "./views/TestShow/TestOne";
 import BookInfo from "./views/ParytyBook/BookInfo.vue"
-
-
+import AddGraduation from "./views/AddGraduation"
+import GraduationStatistics from "./views/GraduationStatistics/Index.vue"
 Vue.use(Router)
 
 
@@ -46,12 +46,22 @@ const router = new Router({
             },
             hidden: true
         },
+        
         {
             path: '/403', component: NotFound, name: 'NotFound',
             meta: {
                 title: '首页',
                 NoTabPage: true,
                 requireAuth: false
+            },
+            hidden: true
+        },
+        {
+            path: '/AddGraduation', component: AddGraduation, name: '毕业生统计',
+            meta: {
+                title: 'AddGraduation',
+                requireAuth: false,
+                NoNeedHome: true // 添加该字段，表示不需要home模板
             },
             hidden: true
         },
@@ -168,6 +178,17 @@ const router = new Router({
             meta: {
                 title: '问题管理',
                 requireAuth: false // 添加该字段，表示进入这个路由是需要登录的
+            }
+        },
+        {
+            path: '/GraduationStatistics',
+            component: GraduationStatistics,
+            name: '毕业生信息管理',
+            iconCls: ' fa-bug',//图标样式class
+            // hidden: true,
+            meta: {
+                title: '毕业生信息管理',
+                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
             }
         },
         {
