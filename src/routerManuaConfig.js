@@ -27,14 +27,14 @@ import Thanks from './views/Thanks'
 import {saveRefreshtime} from "./api/api";
 import NoPage from "./views/404";
 import TestOne from "./views/TestShow/TestOne";
-import BookInfo from "./views/ParytyBook/BookInfo.vue"
+import BookInfo from "./views/PartyBook/BookInfo.vue"
 import AddGraduation from "./views/AddGraduation"
 import GraduationStatistics from "./views/GraduationStatistics/Index.vue"
 Vue.use(Router)
 
 
 const router = new Router({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
         {

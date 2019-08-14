@@ -6,6 +6,7 @@ import Thanks from '../views/Thanks'
 import NoPage from '../views/404'
 import AddGraduation from "../views/AddGraduation"
 import Layout from "../views/Layout/Layout";
+import GraduationStatistics from "../views/GraduationStatistics/Index.vue"
 const _import = require('@/router/_import_' + process.env.NODE_ENV)//获取组件的方法
 
 Vue.use(Router)
@@ -18,6 +19,16 @@ const createRouter = () => new Router({
             path: '/404', component: NoPage, name: 'NoPage',
             meta: {
                 title: 'NoPage',
+                requireAuth: false,
+                NoTabPage: true,
+                NoNeedHome: true // 添加该字段，表示不需要home模板
+            },
+            hidden: true
+        },
+        {
+            path: '/GraduationStatistics', component: GraduationStatistics, name: '添加毕业生信息',
+            meta: {
+                title: 'GraduationStatistics',
                 requireAuth: false,
                 NoTabPage: true,
                 NoNeedHome: true // 添加该字段，表示不需要home模板
@@ -83,7 +94,7 @@ export function  filterAsyncRouter(asyncRouterMap) {
                 route.component = Layout
             } else {
                 try {
-                    route.component = _import(route.path)
+                    route.component = require('@/views'+route.path+'.vue').default;
                 }catch (e) {
                     console.info('%c 当前路由 '+route.path+'.vue 不存在，因此如法导入组件，请检查接口数据和组件是否匹配，并重新登录，清空缓存!', "color:red")
 

@@ -1,6 +1,7 @@
 module.exports = {
   // 基本路径
-  baseUrl: "/",
+  //baseUrl: "/",
+  publicPath:"/",
   // 输出文件目录
   outputDir: "dist",
   // eslint-loader 是否在保存的时候检查
@@ -40,8 +41,8 @@ module.exports = {
     proxy: {
       // 配置多个代理
       "/api": {
-        target: "http://localhost:8081",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
-        //target: "http://localhost:58427",
+        //target: "http://localhost:8081",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
+        target: "http://47.105.159.142:8081",
         //target: "http://api.douban.com",
         ws: true,
         changeOrigin: true,

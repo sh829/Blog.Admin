@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import router from './routerManuaConfig'
+//import router from './routerManuaConfig'
 import store from './store'
 import router from './router/index'
 import '../util/global'//全局
