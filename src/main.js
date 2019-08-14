@@ -11,6 +11,9 @@ import Cookies from 'js-cookie'
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.use(MintUI)
 
 Vue.use(ElementUI, {
     size: Cookies.get('size') || 'medium', // set element-ui default size
