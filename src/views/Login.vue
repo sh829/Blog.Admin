@@ -53,8 +53,8 @@
                 logining: false,
                 loginingMock: false,
                 ruleForm2: {
-                    account: 'test',
-                    checkPass: 'test'
+                    account: 'anquan',
+                    checkPass: '123456'
                 },
                 account3: '测试账号1',
                 rules2: {
@@ -77,14 +77,14 @@
             loginAccount() {
 
                 if (this.account3 == "测试账号1") {
-                    this.ruleForm2.account = "test";
-                    this.ruleForm2.checkPass = "test";
+                    this.ruleForm2.account = "anquan";
+                    this.ruleForm2.checkPass = "123456";
                 } else if (this.account3 == "测试账号2") {
-                    this.ruleForm2.account = "test2";
-                    this.ruleForm2.checkPass = "test2";
+                    this.ruleForm2.account = "";
+                    this.ruleForm2.checkPass = "";
                 } else {
-                    this.ruleForm2.account = "blogadmin";
-                    this.ruleForm2.checkPass = "blogadmin";
+                    this.ruleForm2.account = "";
+                    this.ruleForm2.checkPass = "";
                 }
             },
             //这个是用来测试 mock 的，很简单，只需要在 main.js 中开启服务即可
