@@ -41,9 +41,9 @@ module.exports = {
     proxy: {
       // 配置多个代理
       "/api": {
-        //target: "http://localhost:8081",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
-        target: "http://47.105.159.142:8081",
-        //target: "http://api.douban.com",
+        //target: "http://localhost:32768/",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
+        //target: "http://47:105:159:142:8081",
+        target: "http://127.0.0.1:8081",
         ws: true,
         changeOrigin: true,
         pathRewrite: {

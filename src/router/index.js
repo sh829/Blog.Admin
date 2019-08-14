@@ -12,7 +12,7 @@ const _import = require('@/router/_import_' + process.env.NODE_ENV)//获取组�
 Vue.use(Router)
 
 const createRouter = () => new Router({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
         {
