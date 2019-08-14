@@ -66,6 +66,7 @@
 </template>
 
 <script>
+    import { MessageBox } from 'mint-ui';
     import {testapi, getGraduationListPage,removeGraduation , addGraduation, editGraduation} from '../api/api';
     export default {
           data() {
@@ -160,8 +161,7 @@
             addSubmit:function(){
                 this.$refs.addForm.validate((valid)=>{
                     if(valid){
-                        this.$confirm('确认提交吗？', '提示', {}).then(() => {
-                            debugger
+                        MessageBox.confirm('确认提交吗？?').then(action => {
                             this.addLoading = true;
                              let para = Object.assign({}, this.addForm);
                              addGraduation(para).then((res)=>{
@@ -182,8 +182,32 @@
                                     });
 
                                 }
-                             })
-                        })
+                             })        
+                        });
+                        // this.$confirm('确认提交吗？', '提示', {}).then(() => {
+                        //     debugger
+                        //     this.addLoading = true;
+                        //      let para = Object.assign({}, this.addForm);
+                        //      addGraduation(para).then((res)=>{
+                                 
+                        //         if (res.data.success) {
+                        //             this.addLoading = false;
+                        //             //NProgress.done();
+                        //             this.$message({
+                        //                 message: res.data.msg,
+                        //                 type: 'success'
+                        //             });
+                        //             this.$refs['addForm'].resetFields();
+                        //         }
+                        //         else {
+                        //             this.$message({
+                        //                 message: res.data.msg,
+                        //                 type: 'error'
+                        //             });
+
+                        //         }
+                        //      })
+                        // })
                     }else{
 
                     }
