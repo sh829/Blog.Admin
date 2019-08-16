@@ -135,6 +135,9 @@
                         value: '3',
                         label: '安全1203'
                         }, {
+                        value: '11',
+                        label: '安全1204'
+                        },{
                         value: '4',
                         label: '安全卓越'
                         },
@@ -142,8 +145,7 @@
                         value: '5',
                         label: '安全工业',
 			},
-			{
-			value:'6',
+                        {value: '6',
                         label: '消防1201'
                         }, 
 			{
