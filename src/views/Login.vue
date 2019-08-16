@@ -53,8 +53,8 @@
                 logining: false,
                 loginingMock: false,
                 ruleForm2: {
-                    account: 'anquan',
-                    checkPass: '123456'
+                    account: '',
+                    checkPass: ''
                 },
                 account3: '测试账号1',
                 rules2: {

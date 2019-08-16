@@ -89,7 +89,7 @@
         </el-table>
         <!--工具条-->
         <el-col :span="24" class="toolbar">
-            <el-pagination layout="total,prev, pager, next" @current-change="handleCurrentChange" :page-size="50"
+            <el-pagination layout="total,prev, pager, next" @current-change="handleCurrentChange" :page-size="20"
                            :total="total" style="float:right;">
             </el-pagination>
         </el-col>
@@ -191,6 +191,7 @@
             getGraduations() {
                 let para = {
                     page: this.page,
+                    //pageSize:50,
                     Name: this.filters.Name,
                     Class:this.filters.Class,
                     CurrentCity:this.filters.CurrentCity
